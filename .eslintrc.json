@@ -1,0 +1,23 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es2021": true
+    },
+    "extends": [
+        "standard"
+    ],
+    "parserOptions": {
+        "ecmaVersion": 6
+    },
+    "rules": {
+       "semi": "off",
+       "indent": "off",
+       "space-in-brackets":"off",
+       "padded-blocks":"off",
+       "space-in-parens":"off",
+       "comma-spacing":"off",
+       "space-before-blocks":"off",
+       " brace-style":"off"
+    }
+}
