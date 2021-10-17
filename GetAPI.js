@@ -23,7 +23,8 @@ const StartGetCall = function () {
                               );
 
         request.on('error', err => {
-          console.log('Error returned during Get-Task API call:', err);
+
+          HandleGetFailure();
         });
         request.end();
 };
@@ -40,32 +41,40 @@ const HandleGetSuccess = (dataToPost) => {
 
 };
 
+const HandleGetFailure = (err) => {
+    console.log('Error returned during Get-Task API call:', err);
+    StartNewOpeartion();
+}
+
+const StartNewOpeartion = () => {
+  const readline = require('readline').createInterface({
+    input: process.stdin,
+    output: process.stdout
+  })
+
+  readline.question('To Continue PRESS: Y \nTo Exit Press    : N \n:', name => {
+    try {
+      if (name.toUpperCase() === 'Y'){
+        StartGetCall();
+        readline.close();
+      } else {
+        console.log('Thank You! Process completed')
+        readline.close();
+      }
+    } catch (e) {
+      console.log('Error Occured!! ouptput:',e.message);
+      readline.close();
+    }
+  })
+}
+
 //  HandlePostResponse is called with response of submit-task API
 //  It outputs response of the submit-task API
 //  Also takes response from user if need to make another get-task API call or exit
 const HandlePostResponse = function ( output){
   if ( output && output.data && output.error == null){
-
     console.log( 'Submit-Task response Received: ', output);
-
-    const readline = require('readline').createInterface({
-      input: process.stdin,
-      output: process.stdout
-    })
-
-    readline.question('To Continue PRESS: Y \nTo Exit Press    : N \n:', name => {
-      try {
-        if (name.toUpperCase() === 'Y'){
-          StartGetCall();
-        } else {
-          console.log('Thank You! Process completed')
-          readline.close();
-        }
-      } catch (e) {
-        console.log('Error Occured!! ouptput:',e.message);
-        readline.close();
-      }
-    })
+    StartNewOpeartion();
   } else {
     console.log('ERROR Received!!! output:',output);
   }
