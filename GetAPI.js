@@ -22,10 +22,7 @@ const StartGetCall = function () {
                                     }
                               );
 
-        request.on('error', err => {
-
-          HandleGetFailure();
-        });
+        request.on('error', err => HandleGetFailure(err) );
         request.end();
 };
 
@@ -50,7 +47,7 @@ const StartNewOpeartion = () => {
   const readline = require('readline').createInterface({
     input: process.stdin,
     output: process.stdout
-  })
+  });
 
   readline.question('To Continue PRESS: Y \nTo Exit Press    : N \n:', name => {
     try {
